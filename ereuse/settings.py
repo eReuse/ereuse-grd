@@ -51,7 +51,11 @@ DATABASES = {
 # django-jenkins settings
 
 INSTALLED_APPS += (
-        'django_jenkins',
+    'django_jenkins',
+)
+
+PROJECT_APPS = (
+    'grd',
 )
 
 JENKINS_TASKS = (
