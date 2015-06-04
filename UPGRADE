@@ -1,0 +1,8 @@
+# upgrade grd
+cd ~/grd
+git pull
+
+# run migrations
+source ~/.virtualenv/testing/bin/activate
+cd ~/ereuse
+python manage.py migrate
