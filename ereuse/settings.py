@@ -28,6 +28,8 @@ SECRET_KEY = 'weevjkzau7+&)$1p!3_eps(-4+*z%r8t=0+9zkj7*3u5yn681%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+TEMPLATE_DEBUG = True
+
 ALLOWED_HOSTS = []
 
 ROOT_URLCONF = 'ereuse.urls'
@@ -65,3 +67,8 @@ JENKINS_TASKS = (
 #    'django_jenkins.tasks.run_csslint',
 #    'django_jenkins.tasks.run_sloccount'
 )
+
+try:
+    from ereuse.local_settings import *
+except ImportError as e:
+    print("\033[1;41mException importing local_settings: %s\033[1;m" % e)
