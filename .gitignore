@@ -8,3 +8,5 @@
 dist/
 src/
 reports/
+static/
+ereuse/local_settings.py
