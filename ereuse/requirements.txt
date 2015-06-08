@@ -1,4 +1,6 @@
+# testing
 django-jenkins
 coverage
 pep8
+psycopg2
 pyflakes
