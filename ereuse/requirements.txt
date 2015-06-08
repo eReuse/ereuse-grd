@@ -5,5 +5,7 @@ pep8
 psycopg2
 pyflakes
 
-# swagger-io
-yaml2json
+# swagger-io (json2yaml script)
+pyyaml
+pyaml
+docopt
