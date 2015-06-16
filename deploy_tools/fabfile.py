@@ -69,6 +69,10 @@ def _update_database(source_folder):
     ))
 
 
+def _reload_services():
+    run('sudo service apache2 reload')
+
+
 def deploy():
     site_folder = '/home/ereuse/sites/%s' % env.host
     source_folder = site_folder + '/source'
@@ -78,6 +82,7 @@ def deploy():
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
+    _reload_services()
 
 
 def load_initial_data():
