@@ -1,0 +1,4 @@
+# production
+-e git://github.com/ereuse/grd.git#egg=grd
+django-rest-swagger
+psycopg2

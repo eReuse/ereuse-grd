@@ -9,5 +9,3 @@ pyflakes
 pyyaml
 pyaml
 docopt
-
-django-rest-swagger
