@@ -20,6 +20,29 @@ def _get_latest_source(source_folder):
     run('cd %s && git reset --hard %s' % (source_folder, current_commit))
 
 
+def _install_debian_packages():
+    DEB_PACKAGES = [
+        'python3', 'python3-pip', 'python3-psycopg2',
+        'postgresql', 'postgresql-client', 'postgresql-contrib',
+    ]
+    
+    run(
+        'sudo apt-get update;'
+        'sudo apt-get install %s;' % ' '.join(DEB_PACKAGES)
+    )
+
+
+def _install_postgres_hstore_extension():
+    # TODO: initialize database (if doesn't exists)
+    # install extension (must be superuser to create it).
+    # Include extension in the default template (template1)?
+    # http://stackoverflow.com/a/11584751/1538221
+    run(
+        "sudo -u postgres "
+        "psql -d template1 -c 'CREATE EXTENSION IF NOT EXISTS hstore;'"
+    )
+
+
 def _update_settings(source_folder, site_name):
     settings_path = source_folder + '/ereuse/settings.py'
     #sed(settings_path, "DEBUG = True", "DEBUG = False")
@@ -83,6 +106,12 @@ def deploy():
     _update_static_files(source_folder)
     _update_database(source_folder)
     _reload_services()
+
+def first_deploy():
+    # TODO see ~/INSTALL
+    # It requires superuser privileges
+    _install_debian_packages()
+    _install_postgres_hstore_extension()
 
 
 def load_initial_data():
