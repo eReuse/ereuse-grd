@@ -172,7 +172,7 @@ def import_data():
 
     grd_event_1 = Event()
     grd_event_1.timestamp = dateutil.parser.parse("2015-05-29T12:01:10.568710+00:00")
-    grd_event_1.event = 'register'
+    grd_event_1.type = 'register'
     grd_event_1.data = ''
     grd_event_1.event_time = dateutil.parser.parse("2012-04-10T22:38:20.604391+00:00")
     grd_event_1.by_user = 'foo'
@@ -184,7 +184,7 @@ def import_data():
 
     grd_event_2 = Event()
     grd_event_2.timestamp = dateutil.parser.parse("2015-05-29T12:01:10.616837+00:00")
-    grd_event_2.event = 'recycle'
+    grd_event_2.type = 'recycle'
     grd_event_2.data = ''
     grd_event_2.event_time = dateutil.parser.parse("2014-04-10T22:38:20.604391+00:00")
     grd_event_2.by_user = 'some authorized recycler'
