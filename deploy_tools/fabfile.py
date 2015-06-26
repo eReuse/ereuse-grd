@@ -21,9 +21,11 @@ def _get_latest_source(source_folder):
 
 
 def _install_debian_packages():
+    # TODO move debian dependencies to grd
     DEB_PACKAGES = [
         'python3', 'python3-pip', 'python3-psycopg2',
         'postgresql', 'postgresql-client', 'postgresql-contrib',
+        'postgresql-9.4-postgis-2.1',
     ]
     
     run(
@@ -32,7 +34,7 @@ def _install_debian_packages():
     )
 
 
-def _install_postgres_hstore_extension():
+def _install_postgres_extensions():
     # TODO: initialize database (if doesn't exists)
     # install extension (must be superuser to create it).
     # Include extension in the default template (template1)?
@@ -40,6 +42,7 @@ def _install_postgres_hstore_extension():
     run(
         "sudo -u postgres "
         "psql -d template1 -c 'CREATE EXTENSION IF NOT EXISTS hstore;'"
+        "psql -d template1 -c 'CREATE EXTENSION IF NOT EXISTS postgis;'"
     )
 
 
@@ -111,7 +114,7 @@ def first_deploy():
     # TODO see ~/INSTALL
     # It requires superuser privileges
     _install_debian_packages()
-    _install_postgres_hstore_extension()
+    _install_postgres_extensions()
 
 
 def load_initial_data():
