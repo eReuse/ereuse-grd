@@ -26,10 +26,7 @@
 # you must make sure ./some_folder/__init__.py exists
 # and run  ./manage.py runscript some_folder.some_script
 
-import os
-import sys
 from django.db import transaction
-from uuid import UUID
 
 class BasicImportHelper(object):
 
@@ -133,28 +130,16 @@ def run():
 def import_data():
     # Initial Imports
     from django.contrib.auth.models import User
-    grd_user_1, created = User.objects.get_or_create(username='ereuse',
-                                                     email='ereuse@ereuse.org')
-    if created:
-        grd_user_1.set_password('ereuse')
 
     # Processing model: Device
 
     from grd.models import Device
 
     grd_device_1 = Device()
-    grd_device_1.uuid = UUID('8514b4b1-1107-46cc-b0a9-bd97b82510c4')
     grd_device_1.id = '//xsr.cat/device/1234'
     grd_device_1.hid = 'XPS13-1111-2222'
     grd_device_1.type = 'computer'
     grd_device_1 = importer.save_or_locate(grd_device_1)
-
-    grd_device_2 = Device()
-    grd_device_2.uuid = UUID('bd381ed1-5ee7-440b-96bb-29e30f89a286')
-    grd_device_2.id = '1'
-    grd_device_2.hid = 'DDR3'
-    grd_device_2.type = 'monitor'
-    grd_device_2 = importer.save_or_locate(grd_device_2)
 
     # Processing model: Agent
 
@@ -163,7 +148,7 @@ def import_data():
     grd_agent_1 = Agent()
     grd_agent_1.name = 'XSR'
     grd_agent_1.description = ''
-    grd_agent_1.user =  grd_user_1
+    grd_agent_1.user =  importer.locate_object(User, "id", User, "id", 1, {'username': 'ereuse', 'is_staff': True, 'is_superuser': True, 'is_active': True, 'first_name': '', 'date_joined': datetime.datetime(2015, 7, 20, 12, 22, 10, 97604, tzinfo=<UTC>), 'last_login': None, 'password': 'pbkdf2_sha256$20000$txVP7VTbH6Mx$g09pX9Ge0bXHwXcSoXCDwiqXWpHp/fjNtCW3EkEX7tk=', '_agent_cache': 'XSR', 'email': 'test@localhost', 'id': 1, 'last_name': ''} )
     grd_agent_1 = importer.save_or_locate(grd_agent_1)
 
     # Processing model: Event
@@ -171,25 +156,23 @@ def import_data():
     from grd.models import Event
 
     grd_event_1 = Event()
-    grd_event_1.timestamp = dateutil.parser.parse("2015-05-29T12:01:10.568710+00:00")
+    grd_event_1.timestamp = dateutil.parser.parse("2015-07-20T12:22:10.244184+00:00")
     grd_event_1.type = 'register'
-    grd_event_1.data = ''
+    grd_event_1.data = {}
     grd_event_1.event_time = dateutil.parser.parse("2012-04-10T22:38:20.604391+00:00")
     grd_event_1.by_user = 'foo'
     grd_event_1.agent = grd_agent_1
     grd_event_1.device = grd_device_1
     grd_event_1 = importer.save_or_locate(grd_event_1)
 
-    grd_event_1.components.add(grd_device_2)
+    # Processing model: Location
 
-    grd_event_2 = Event()
-    grd_event_2.timestamp = dateutil.parser.parse("2015-05-29T12:01:10.616837+00:00")
-    grd_event_2.type = 'recycle'
-    grd_event_2.data = ''
-    grd_event_2.event_time = dateutil.parser.parse("2014-04-10T22:38:20.604391+00:00")
-    grd_event_2.by_user = 'some authorized recycler'
-    grd_event_2.agent = grd_agent_1
-    grd_event_2.device = grd_device_1
-    grd_event_2 = importer.save_or_locate(grd_event_2)
+    from grd.models import Location
+
+    grd_location_1 = Location()
+    grd_location_1.lat = 27.9878943
+    grd_location_1.lon = 86.9247837
+    grd_location_1.event = grd_event_1
+    grd_location_1 = importer.save_or_locate(grd_location_1)
 
 
