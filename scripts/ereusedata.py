@@ -129,7 +129,13 @@ def run():
 
 def import_data():
     # Initial Imports
+
+    # Processing model: User
+
     from django.contrib.auth.models import User
+
+    user = User.objects.create_superuser('ereuse', 'ereuse@ereuse.org', 'ereuse@grd')
+
 
     # Processing model: Device
 
@@ -141,6 +147,7 @@ def import_data():
     grd_device_1.type = 'computer'
     grd_device_1 = importer.save_or_locate(grd_device_1)
 
+
     # Processing model: Agent
 
     from grd.models import Agent
@@ -148,7 +155,7 @@ def import_data():
     grd_agent_1 = Agent()
     grd_agent_1.name = 'XSR'
     grd_agent_1.description = ''
-    grd_agent_1.user =  importer.locate_object(User, "id", User, "id", 1, {'username': 'ereuse', 'is_staff': True, 'is_superuser': True, 'is_active': True, 'first_name': '', 'date_joined': datetime.datetime(2015, 7, 20, 12, 22, 10, 97604, tzinfo=<UTC>), 'last_login': None, 'password': 'pbkdf2_sha256$20000$txVP7VTbH6Mx$g09pX9Ge0bXHwXcSoXCDwiqXWpHp/fjNtCW3EkEX7tk=', '_agent_cache': 'XSR', 'email': 'test@localhost', 'id': 1, 'last_name': ''} )
+    grd_agent_1.user =  user
     grd_agent_1 = importer.save_or_locate(grd_agent_1)
 
     # Processing model: Event
