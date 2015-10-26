@@ -42,7 +42,7 @@ WSGI_APPLICATION = 'ereuse.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'ereuse',
         'USER': 'ereuse',
         'PASSWORD': 'ereuse',
@@ -56,12 +56,14 @@ DATABASES = {
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
 
 
-# django-jenkins settings
-
 INSTALLED_APPS += (
+    'dcp',
     'django_jenkins',
     'rest_framework_swagger',
+    'rest_framework_gis',
 )
+
+# django-jenkins settings
 
 PROJECT_APPS = (
     'grd',
